@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web3Studio.Util", "Web3Studio.Util\Web3Studio.Util.csproj", "{B008D745-A40F-4614-8BA3-5A2DE21EF877}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web3Studio.Util.Tests", "Web3Studio.Util.Tests\Web3Studio.Util.Tests.csproj", "{90EAD43C-849F-4230-BE01-6B77B6119A7A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B008D745-A40F-4614-8BA3-5A2DE21EF877}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B008D745-A40F-4614-8BA3-5A2DE21EF877}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B008D745-A40F-4614-8BA3-5A2DE21EF877}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B008D745-A40F-4614-8BA3-5A2DE21EF877}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90EAD43C-849F-4230-BE01-6B77B6119A7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90EAD43C-849F-4230-BE01-6B77B6119A7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90EAD43C-849F-4230-BE01-6B77B6119A7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90EAD43C-849F-4230-BE01-6B77B6119A7A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
