@@ -1,7 +1,5 @@
-# RPC Studio Common
-This project contains common classes and utilities used by other RPC Studio libraries.
-
-You can use these utilities directly in your code.
+# Web3 Studio Util
+Common utilities for Web3 including native Hex type, ABI serialization/deserialization, and JSON RPC.
 
 Notable functionalities include:
 - Hex number format
