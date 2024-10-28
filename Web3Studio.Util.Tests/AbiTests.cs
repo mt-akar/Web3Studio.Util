@@ -57,6 +57,20 @@ public sealed class AbiTests
         // This works but it is pointless
         var valueTuple = AbiEncoder.DecodeToValueTuple<ValueTuple>("0x0000000000000000000000000000000000000000000000000000000000000020");
     }
+    
+    [Fact]
+    public void Decoder_HandlesZeros()
+    {
+        var (item10, item11, item12) = AbiEncoder.DecodeToValueTuple<(Hex, Hex, Hex)>(
+            "0x" +
+            "0000000000000000000000000000000000000000000000000000000000000004" +
+            "0000000000000000000000000000000000000000000000000000000000000000" +
+            "0000000000000000000000000000000000000000000000008ac7230489e80000");
+        
+        item10.Should().Be(4);
+        item11.Should().Be(0);
+        item12.Integer.Should().Be(10000000000000000000);
+    }
 
     [Fact]
     public void Encoder_Works()

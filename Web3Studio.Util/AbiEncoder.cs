@@ -135,7 +135,7 @@ namespace Web3Studio.Util
                 throw new ArgumentException("ValueTuple generic argument is not supported");
             }).ToArray();
 
-            return (TTuple) Activator.CreateInstance(typeof(TTuple), decodedData)!;
+            return (TTuple)Activator.CreateInstance(typeof(TTuple), decodedData)!;
         }
 
         public static Hex DecodeToHex(string hex)
@@ -161,7 +161,11 @@ namespace Web3Studio.Util
             if (offset + 64 > hex.Length)
                 throw new FormatException("Parameter length can't be larger than hex string length.");
 
-            return hex[offset..(offset + 64)].TrimStart('0').ToString().ToHex();
+            var slice = hex[offset..(offset + 64)].TrimStart('0');
+            if (slice.Length == 0)
+                return 0;
+
+            return slice.ToString();
         }
 
         private static bool DecodeBool(ReadOnlySpan<char> hex, int offset)
@@ -177,7 +181,7 @@ namespace Web3Studio.Util
 
             var stringBuilder = new StringBuilder();
             for (var i = stringStart; i < stringEnd; i += 2)
-                stringBuilder.Append((char) Convert.ToByte(hex[i..(i + 2)].ToString(), 16));
+                stringBuilder.Append((char)Convert.ToByte(hex[i..(i + 2)].ToString(), 16));
 
             return stringBuilder.ToString();
         }
