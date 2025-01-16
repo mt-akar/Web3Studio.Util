@@ -7,7 +7,7 @@
         <Description>Common utility for Web3 such as native Hex type, ABI serialization/deserialization, and Json RPC.</Description>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageTags>rpc, jsonrpc, hex, crypto, blockchain, abi</PackageTags>
-        <Version>1.0.2</Version>
+        <Version>1.0.3</Version>
     </PropertyGroup>
 
     <ItemGroup>

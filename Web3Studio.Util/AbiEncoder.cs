@@ -54,7 +54,11 @@ namespace Web3Studio.Util
             return sb.ToString();
         }
 
-        private static void AppendEncodedTupleItem(StringBuilder sbValue, StringBuilder sbDynamic, object? value, int length)
+        private static void AppendEncodedTupleItem(
+            StringBuilder sbValue,
+            StringBuilder sbDynamic,
+            object? value,
+            int length)
         {
             void AppendPosition() => AppendEncodedValue(sbValue, length * 32 + sbDynamic.Length / 2);
 
@@ -131,7 +135,9 @@ namespace Web3Studio.Util
         private static void AppendEncodedInt(StringBuilder sb, BigInteger value)
         {
             var hex = HexConvert.IntToString(value, false);
-            sb.Append('0', 64 - hex.Length % 64);
+            if (hex.Length > 64)
+                throw new Exception("ABI encoding numbers larger than 32 bytes are not supported");
+            sb.Append('0', 64 - hex.Length);
             sb.Append(hex);
         }
 

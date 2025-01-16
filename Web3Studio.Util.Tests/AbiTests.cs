@@ -55,9 +55,11 @@ public sealed class AbiTests
         item12.Should().Be(true);
 
         // This works but it is pointless
-        var valueTuple = AbiEncoder.DecodeToValueTuple<ValueTuple>("0x0000000000000000000000000000000000000000000000000000000000000020");
+        var valueTuple =
+            AbiEncoder.DecodeToValueTuple<ValueTuple>(
+                "0x0000000000000000000000000000000000000000000000000000000000000020");
     }
-    
+
     [Fact]
     public void Decoder_HandlesZeros()
     {
@@ -66,7 +68,7 @@ public sealed class AbiTests
             "0000000000000000000000000000000000000000000000000000000000000004" +
             "0000000000000000000000000000000000000000000000000000000000000000" +
             "0000000000000000000000000000000000000000000000008ac7230489e80000");
-        
+
         item10.Should().Be(4);
         item11.Should().Be(0);
         item12.Integer.Should().Be(10000000000000000000);
@@ -79,9 +81,10 @@ public sealed class AbiTests
         meaningOfUniverse.Should().Be("0x000000000000000000000000000000000000000000000000000000000000002a");
         var meaningOfUniverse2 = AbiEncoder.EncodeObjects([42]);
         meaningOfUniverse2.Should().Be(meaningOfUniverse);
-        
+
         var meaningOfUniverseWithMethodHash = AbiEncoder.Encode("1234abcd", ValueTuple.Create(42));
-        meaningOfUniverseWithMethodHash.Should().Be("0x1234abcd000000000000000000000000000000000000000000000000000000000000002a");
+        meaningOfUniverseWithMethodHash.Should()
+            .Be("0x1234abcd000000000000000000000000000000000000000000000000000000000000002a");
         var meaningOfUniverse2WithMethodHash = AbiEncoder.EncodeObjects("1234abcd", [42]);
         meaningOfUniverse2WithMethodHash.Should().Be(meaningOfUniverseWithMethodHash);
 
@@ -114,6 +117,18 @@ public sealed class AbiTests
         number1.Should().Be(78);
         number2.Should().Be(42);
         number3.Should().Be(12);
+
+        var fullHexes = new ValueTuple<Hex, Hex>(
+            "0x3d5b1ae49ef60a7411d2471a80c9830ff97baa952f2bb61689077f536260b147",
+            "0x5eadf7e0a01d8b5c1b93f4fe0805daca15982431324be89de4141714e4444bdd");
+        var encodedFullHexes = AbiEncoder.Encode(fullHexes);
+        encodedFullHexes.Should()
+            .Be("0x" +
+                "3d5b1ae49ef60a7411d2471a80c9830ff97baa952f2bb61689077f536260b147" +
+                "5eadf7e0a01d8b5c1b93f4fe0805daca15982431324be89de4141714e4444bdd");
+        var (fullHex0, fullHex1) = AbiEncoder.DecodeToValueTuple<(Hex, Hex)>(encodedFullHexes);
+        fullHex0.Should().Be("0x3d5b1ae49ef60a7411d2471a80c9830ff97baa952f2bb61689077f536260b147");
+        fullHex1.Should().Be("0x5eadf7e0a01d8b5c1b93f4fe0805daca15982431324be89de4141714e4444bdd");
 
         var encodedNumbersWithMethodHash = AbiEncoder.Encode("12345678", numbers);
         encodedNumbersWithMethodHash.Should()
@@ -156,13 +171,14 @@ public sealed class AbiTests
                 "617765736f6d6521000000000000000000000000000000000000000000000000");
         var encodedStrings2 = AbiEncoder.EncodeObjects(["Chain", "Gate", "is", "awesome!"]);
         encodedStrings2.Should().Be(encodedStrings);
-        var (string1, string2, string3, string4) = AbiEncoder.DecodeToValueTuple<(string, string, string, string)>(encodedStrings);
+        var (string1, string2, string3, string4) =
+            AbiEncoder.DecodeToValueTuple<(string, string, string, string)>(encodedStrings);
         string1.Should().Be("Chain");
         string2.Should().Be("Gate");
         string3.Should().Be("is");
         string4.Should().Be("awesome!");
 
-        var hexArray = ValueTuple.Create(new[] {15.ToHex(), 30.ToHex(), 45.ToHex()});
+        var hexArray = ValueTuple.Create(new[] { 15.ToHex(), 30.ToHex(), 45.ToHex() });
         var encodedHexArray = AbiEncoder.Encode(hexArray);
         encodedHexArray.Should()
             .Be("0x" +
@@ -172,7 +188,8 @@ public sealed class AbiTests
                 "000000000000000000000000000000000000000000000000000000000000001e" +
                 "000000000000000000000000000000000000000000000000000000000000002d");
 
-        var arraysAndValues = (new[] {65, 75, 85}, 420, new Hex[] {"7cb57b5a97eabe94205c07890be4c1ad31e486a8", "94205c07890be4c1ad31e486a87cb57b5a97eabe"});
+        var arraysAndValues = (new[] { 65, 75, 85 }, 420,
+            new Hex[] { "7cb57b5a97eabe94205c07890be4c1ad31e486a8", "94205c07890be4c1ad31e486a87cb57b5a97eabe" });
         var encodedArraysAndValues = AbiEncoder.Encode(arraysAndValues);
         encodedArraysAndValues.Should()
             .Be("0x" +

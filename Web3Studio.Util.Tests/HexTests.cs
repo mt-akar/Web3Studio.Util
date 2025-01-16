@@ -293,7 +293,7 @@ public sealed class HexTests
         hex834InstanceE.Should().Be(834U);
         hex834InstanceE.Should().Be("0x342");
 
-        var hex834InstanceF = new Hex(new byte[] {3, 66});
+        var hex834InstanceF = new Hex([3, 66]);
         hex834InstanceF.Integer.Should().Be(834);
         hex834InstanceF.Integer.Should().Be(834L);
         hex834InstanceF.Integer.Should().Be(834U);
@@ -571,17 +571,17 @@ public sealed class HexTests
         Hex zeroHex = 0;
         zeroHex.Integer.Should().Be(0);
         zeroHex.HexString.Should().Be("0x0");
-        zeroHex.Bytes.Should().BeEquivalentTo(new[] {0});
+        zeroHex.Bytes.Should().BeEquivalentTo([0]);
 
         Hex zeroHex2 = "0x0";
         zeroHex2.Integer.Should().Be(0);
         zeroHex2.HexString.Should().Be("0x0");
-        zeroHex2.Bytes.Should().BeEquivalentTo(new[] {0});
+        zeroHex2.Bytes.Should().BeEquivalentTo([0]);
 
         Hex zeroHex3 = "0";
         zeroHex3.Integer.Should().Be(0);
         zeroHex3.HexString.Should().Be("0x0");
-        zeroHex3.Bytes.Should().BeEquivalentTo(new[] {0});
+        zeroHex3.Bytes.Should().BeEquivalentTo([0]);
     }
 
     [Fact]
@@ -589,8 +589,8 @@ public sealed class HexTests
     {
         Hex bigHex0 = "0xdac17f958d2ee523a2206206994597c13d831ec7";
         bigHex0.Integer.ToString().Should().Be("1248875146012964071876423320777688075155124985543");
-        bigHex0.Bytes.Should().BeEquivalentTo(new[]
-            {218, 193, 127, 149, 141, 46, 229, 35, 162, 32, 98, 6, 153, 69, 151, 193, 61, 131, 30, 199});
+        bigHex0.Bytes.Should().BeEquivalentTo(
+        [218, 193, 127, 149, 141, 46, 229, 35, 162, 32, 98, 6, 153, 69, 151, 193, 61, 131, 30, 199]);
 
         Hex bigHex1 = "0x000000000000000000000000000000000000000000000001";
         bigHex1.Integer.ToString().Should().Be("1");
@@ -604,8 +604,8 @@ public sealed class HexTests
         byte[] bytesFromString = HexConvert.StringToBytes(bigHexString);
 
         intFromString.ToString().Should().Be("1248875146012964071876423320777688075155124985543");
-        bytesFromString.Should().BeEquivalentTo(new[]
-            {218, 193, 127, 149, 141, 46, 229, 35, 162, 32, 98, 6, 153, 69, 151, 193, 61, 131, 30, 199});
+        bytesFromString.Should().BeEquivalentTo(
+        [218, 193, 127, 149, 141, 46, 229, 35, 162, 32, 98, 6, 153, 69, 151, 193, 61, 131, 30, 199]);
     }
 
     [Fact]

@@ -62,7 +62,7 @@ namespace Web3Studio.Util
                 if (_hexString == null)
                 {
                     if (_bytes != null)
-                        _hexString = HexConvert.BytesToString(_bytes);
+                        _hexString = HexConvert.BytesToString(_bytes, true, true);
                     else if (_integer != null)
                         _hexString = HexConvert.IntToString(_integer.Value);
                     else
