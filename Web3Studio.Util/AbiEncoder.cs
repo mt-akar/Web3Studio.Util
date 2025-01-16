@@ -10,22 +10,42 @@ namespace Web3Studio.Util
     {
         #region Encode
 
-        public static string Encode<TTuple>(TTuple tuple, string? methodHash = null)
+        public static string Encode<TTuple>(TTuple tuple)
+            where TTuple : ITuple
+        {
+            return EncodeWithPrefix("0x", tuple);
+        }
+
+        public static string Encode<TTuple>(string methodHash, TTuple tuple)
+            where TTuple : ITuple
+        {
+            return EncodeWithPrefix($"0x{methodHash}", tuple);
+        }
+
+        private static string EncodeWithPrefix<TTuple>(string prefix, TTuple tuple)
             where TTuple : ITuple
         {
             var sb = new StringBuilder();
-            sb.Append("0x");
-            if (!string.IsNullOrEmpty(methodHash))
-                sb.Append(methodHash);
+            sb.Append(prefix);
 
             AppendEncodedTuple(sb, tuple);
             return sb.ToString();
         }
 
-        public static string EncodeObjects(params object[] objects)
+        public static string EncodeObjects(object[] objects)
+        {
+            return EncodeObjectsWithPrefix("0x", objects);
+        }
+
+        public static string EncodeObjects(string methodHash, object[] objects)
+        {
+            return EncodeObjectsWithPrefix($"0x{methodHash}", objects);
+        }
+
+        private static string EncodeObjectsWithPrefix(string prefix, object[] objects)
         {
             var sb = new StringBuilder();
-            sb.Append("0x");
+            sb.Append(prefix);
             var sbDynamic = new StringBuilder();
             foreach (var value in objects)
                 AppendEncodedTupleItem(sb, sbDynamic, value, objects.Length);

@@ -77,8 +77,13 @@ public sealed class AbiTests
     {
         var meaningOfUniverse = AbiEncoder.Encode(ValueTuple.Create(42));
         meaningOfUniverse.Should().Be("0x000000000000000000000000000000000000000000000000000000000000002a");
-        var meaningOfUniverse2 = AbiEncoder.EncodeObjects(42);
+        var meaningOfUniverse2 = AbiEncoder.EncodeObjects([42]);
         meaningOfUniverse2.Should().Be(meaningOfUniverse);
+        
+        var meaningOfUniverseWithMethodHash = AbiEncoder.Encode("1234abcd", ValueTuple.Create(42));
+        meaningOfUniverseWithMethodHash.Should().Be("0x1234abcd000000000000000000000000000000000000000000000000000000000000002a");
+        var meaningOfUniverse2WithMethodHash = AbiEncoder.EncodeObjects("1234abcd", [42]);
+        meaningOfUniverse2WithMethodHash.Should().Be(meaningOfUniverseWithMethodHash);
 
         var usdtName = AbiEncoder.Encode(ValueTuple.Create("Tether USD"));
         usdtName.Should()
@@ -86,8 +91,17 @@ public sealed class AbiTests
                 "0000000000000000000000000000000000000000000000000000000000000020" +
                 "000000000000000000000000000000000000000000000000000000000000000a" +
                 "5465746865722055534400000000000000000000000000000000000000000000");
-        var usdtName2 = AbiEncoder.EncodeObjects("Tether USD");
+        var usdtName2 = AbiEncoder.EncodeObjects(["Tether USD"]);
         usdtName2.Should().Be(usdtName);
+
+        var usdtNameWithMethodHash = AbiEncoder.Encode("abcd1234", ValueTuple.Create("Tether USD"));
+        usdtNameWithMethodHash.Should()
+            .Be("0xabcd1234" +
+                "0000000000000000000000000000000000000000000000000000000000000020" +
+                "000000000000000000000000000000000000000000000000000000000000000a" +
+                "5465746865722055534400000000000000000000000000000000000000000000");
+        var usdtName2WithMethodHash = AbiEncoder.EncodeObjects("abcd1234", ["Tether USD"]);
+        usdtName2WithMethodHash.Should().Be(usdtNameWithMethodHash);
 
         var numbers = new ValueTuple<Hex, Hex, Hex>(78, 42, 12);
         var encodedNumbers = AbiEncoder.Encode(numbers);
@@ -101,6 +115,13 @@ public sealed class AbiTests
         number2.Should().Be(42);
         number3.Should().Be(12);
 
+        var encodedNumbersWithMethodHash = AbiEncoder.Encode("12345678", numbers);
+        encodedNumbersWithMethodHash.Should()
+            .Be("0x12345678" +
+                "000000000000000000000000000000000000000000000000000000000000004e" +
+                "000000000000000000000000000000000000000000000000000000000000002a" +
+                "000000000000000000000000000000000000000000000000000000000000000c");
+
         var mixedInput = (5478.ToHex(), "Tether USD", true);
         var encodedMixedInput = AbiEncoder.Encode(mixedInput);
         encodedMixedInput.Should()
@@ -110,7 +131,7 @@ public sealed class AbiTests
                 "0000000000000000000000000000000000000000000000000000000000000001" +
                 "000000000000000000000000000000000000000000000000000000000000000a" +
                 "5465746865722055534400000000000000000000000000000000000000000000");
-        var encodedMixedInput2 = AbiEncoder.EncodeObjects(5478.ToHex(), "Tether USD", true);
+        var encodedMixedInput2 = AbiEncoder.EncodeObjects([5478.ToHex(), "Tether USD", true]);
         encodedMixedInput2.Should().Be(encodedMixedInput);
         var (number, name, flag) = AbiEncoder.DecodeToValueTuple<(Hex, string, bool)>(encodedMixedInput);
         number.Should().Be(5478);
@@ -133,7 +154,7 @@ public sealed class AbiTests
                 "6973000000000000000000000000000000000000000000000000000000000000" +
                 "0000000000000000000000000000000000000000000000000000000000000008" +
                 "617765736f6d6521000000000000000000000000000000000000000000000000");
-        var encodedStrings2 = AbiEncoder.EncodeObjects("Chain", "Gate", "is", "awesome!");
+        var encodedStrings2 = AbiEncoder.EncodeObjects(["Chain", "Gate", "is", "awesome!"]);
         encodedStrings2.Should().Be(encodedStrings);
         var (string1, string2, string3, string4) = AbiEncoder.DecodeToValueTuple<(string, string, string, string)>(encodedStrings);
         string1.Should().Be("Chain");
