@@ -24,7 +24,7 @@ namespace Web3Studio.Util
     /// </summary>
     public struct Hex
     {
-        private static readonly Regex HexRegex = new Regex("^(0x)?[0-9a-fA-F]+$");
+        private static readonly Regex HexRegex = new Regex("^(0x)?[0-9a-fA-F]*$");
 
 
         private BigInteger? _integer;
@@ -284,6 +284,10 @@ namespace Web3Studio.Util
 
         public static byte[] StringToBytes(string str, bool trimZeros = false)
         {
+            // Special case: "0x" should be treated as "0x0"
+            if (str == "0x")
+                str = "0x0";
+
             // Find the start offset
             var startOffset = str.StartsWith("0x") ? 2 : 0;
             if (trimZeros)

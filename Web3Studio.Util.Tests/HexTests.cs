@@ -813,4 +813,14 @@ public sealed class HexTests
         ("0x0".ToHex().Integer == 0).Should().BeTrue();
         ("0x000000000000000".ToHex().Integer == 0).Should().BeTrue();
     }
+
+    [Fact]
+    public void EmptyHexString_ShouldBeHandledAsZero()
+    {
+        // After fixing the code, this test should pass
+        // "0x" should be interpreted as 0
+        var zeroXHex = "0x".ToHex();
+        zeroXHex.Integer.Should().Be(0);
+        zeroXHex.Bytes.Should().BeEquivalentTo([0]);
+    }
 }
